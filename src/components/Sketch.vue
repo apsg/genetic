@@ -6,6 +6,10 @@
 
 <script>
     import VueP5 from 'vue-p5'
+    import Gene from '../logic/Gene'
+    import SpeedGene from '../logic/SpeedGene'
+
+
 
     export default {
         name: 'HelloWorld',
@@ -21,6 +25,17 @@
             return {
                 bgColor: [100, 255, 100]
             }
+        },
+
+        mounted() {
+            let gene = new Gene(3);
+            gene.fromBin('011101').validate();
+
+            let speed = new SpeedGene(3);
+            speed.validate();
+
+            speed.fromBin('11');
+
         },
 
         methods: {
