@@ -6,8 +6,7 @@
 
 <script>
     import VueP5 from 'vue-p5'
-    import Gene from '../logic/Gene'
-    import SpeedGene from '../logic/SpeedGene'
+    import Genome from '../logic/Genome'
 
     export default {
         name: 'Sketch',
@@ -26,10 +25,9 @@
         },
 
         mounted() {
-            let gene = Gene.fromBin('011101');
-            console.log(gene);
+            let genome = new Genome();
 
-
+            console.log(genome.length);
         },
 
         methods: {
