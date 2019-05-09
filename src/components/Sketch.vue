@@ -9,10 +9,8 @@
     import Gene from '../logic/Gene'
     import SpeedGene from '../logic/SpeedGene'
 
-
-
     export default {
-        name: 'HelloWorld',
+        name: 'Sketch',
         props: {
             msg: String
         },
@@ -28,13 +26,9 @@
         },
 
         mounted() {
-            let gene = new Gene(3);
-            gene.fromBin('011101').validate();
+            let gene = Gene.fromBin('011101');
+            console.log(gene);
 
-            let speed = new SpeedGene(3);
-            speed.validate();
-
-            speed.fromBin('11');
 
         },
 
