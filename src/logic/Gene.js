@@ -13,7 +13,11 @@ export default class Gene {
     }
 
     static get max() {
-        return 256;
+        return 25.6;
+    }
+
+    static get divider() {
+        return 10;
     }
 
     /** Rest of the class */
@@ -25,7 +29,7 @@ export default class Gene {
     }
 
     constructor(value = 0) {
-        this._value = value;
+        this._value = Math.trunc(this.constructor.divider * value);
 
         this.min = this.constructor.min;
         this.max = this.constructor.max;
@@ -43,13 +47,13 @@ export default class Gene {
     }
 
     validate() {
-        if (this.max > Math.pow(2, this.constructor.length)) {
-            throw new "Invalid gene constraints"
+        if (this.max > (Math.pow(2, this.constructor.length) / this.constructor.divider)) {
+            throw "Invalid gene constraints"
         }
 
         if (isNaN(this._value)
-            || this._value < this.min
-            || this._value > this.max
+            || this.value < this.min
+            || this.value > this.max
         ) {
             throw "Invalid value";
         }
@@ -58,11 +62,11 @@ export default class Gene {
     }
 
     get value() {
-        return this._value;
+        return this._value / this.constructor.divider;
     }
 
-    set value(v) {
-        return this._value = v;
+    set value(value) {
+        this._value = Math.trunc(this.constructor.divider * value);
     }
 
     get length() {
