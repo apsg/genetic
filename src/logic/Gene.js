@@ -4,6 +4,10 @@ export default class Gene {
 
     /** These three values should be overwritten in specific genes' declarations */
 
+    static get name() {
+        return '';
+    }
+
     static get length() {
         return 8;
     }
@@ -29,10 +33,12 @@ export default class Gene {
     }
 
     constructor(value = 0) {
-        this._value = Math.trunc(this.constructor.divider * value);
+        this._value = Math.trunc(this.constructor.divider * value) / this.constructor.divider;
 
         this.min = this.constructor.min;
         this.max = this.constructor.max;
+
+        this.name = this.constructor.name;
     }
 
     setRange(min, max) {
@@ -48,14 +54,16 @@ export default class Gene {
 
     validate() {
         if (this.max > (Math.pow(2, this.constructor.length) / this.constructor.divider)) {
-            throw "Invalid gene constraints"
+            throw new Error("Invalid gene constraints");
         }
+
+        console.log(this.value);
 
         if (isNaN(this._value)
             || this.value < this.min
             || this.value > this.max
         ) {
-            throw "Invalid value";
+            throw new Error("Invalid value");
         }
 
         return this;
@@ -71,5 +79,9 @@ export default class Gene {
 
     get length() {
         return this.constructor.length
+    }
+
+    get divider() {
+        return this.constructor.divider
     }
 }

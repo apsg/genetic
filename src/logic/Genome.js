@@ -1,11 +1,18 @@
-import Gene from './Gene';
-import SpeedGene from './SpeedGene';
+import SpeedGene from './genes/SpeedGene';
+import FertilityGene from "./genes/FertilityGene";
 
 export default class Genome {
 
+    static fromBin(code) {
+        let genome = new this();
+        genome.loadGenes(code);
+
+        return genome;
+    }
+
     constructor() {
         this.declarations = [
-            Gene,
+            FertilityGene,
             SpeedGene
         ];
 
@@ -21,10 +28,33 @@ export default class Genome {
     }
 
     loadGenes(code) {
-        if (code.length != this.length) {
+        if (code.length !== this.length) {
             throw "invalid code length";
         }
+
+        this.genes = [];
+
+        for (let type of this.declarations) {
+            let current = code.substr(0, type.length);
+            code = code.substr(type.length);
+
+            this.genes.push(type.fromBin(current));
+        }
+
+        return this;
     }
 
+    validate() {
+        for (let gene of this.genes) {
+            gene.validate();
+        }
 
+        return this;
+    }
+
+    toBin() {
+        return this.genes
+            .map(gene => gene.toBin())
+            .join('');
+    }
 }

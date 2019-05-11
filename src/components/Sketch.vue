@@ -1,15 +1,17 @@
 <template>
     <div>
         <vue-p5 v-on="{setup, draw}"></vue-p5>
-        <p>{{ gene }}</p>
         <p>{{ genome }}</p>
+        <p v-if="genome">{{ genome.toBin() }}</p>
+        <p v-if="genome2">{{ genome2.toBin() }}</p>
+        <p>{{ cross }}</p>
     </div>
 </template>
 
 <script>
     import VueP5 from 'vue-p5'
     import Genome from '../logic/Genome'
-    import Gene from '../logic/Gene'
+    import Reproduction from "../logic/Reproduction";
 
     export default {
         name: 'Sketch',
@@ -24,17 +26,17 @@
         data() {
             return {
                 bgColor: [100, 255, 100],
-                gene: null,
-                genome: null
+                genome: null,
+                genome2: null,
+                cross: null,
             }
         },
 
         mounted() {
-            this.genome = new Genome();
+            this.genome = Genome.fromBin('000000000');
+            this.genome2 = Genome.fromBin('111111111');
 
-            this.gene = new Gene(20);
-            
-            this.gene.validate();
+            this.cross = Reproduction.cross(this.genome, this.genome2);
         },
 
         methods: {

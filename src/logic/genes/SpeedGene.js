@@ -1,6 +1,11 @@
-import Gene from './Gene'
+import Gene from '../Gene'
 
 export default class SpeedGene extends Gene {
+
+    static get name(){
+        return 'speed';
+    }
+
     static get length() {
         return 2;
     }
@@ -10,6 +15,10 @@ export default class SpeedGene extends Gene {
     }
 
     static get max() {
-        return 3;
+        return 0.3;
+    }
+
+    static get divider(){
+        return 10;
     }
 }
