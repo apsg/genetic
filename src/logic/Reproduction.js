@@ -49,7 +49,7 @@ export default class Reproduction {
 
         for (let i = 0; i < code.length; i++) {
             if (Math.random() < this.mutationChance) {
-                code[i] = code[i] == 0 ? 1 : 0;
+                code[i] = code[i] === 0 ? 1 : 0;
             }
         }
 

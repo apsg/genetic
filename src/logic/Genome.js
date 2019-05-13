@@ -3,11 +3,19 @@ import FertilityGene from "./genes/FertilityGene";
 
 export default class Genome {
 
-    static fromBin(code) {
-        let genome = new this();
-        genome.loadGenes(code);
+    static fromBin(code, shouldValidate = true) {
+        try {
+            let genome = new this();
+            genome.loadGenes(code);
 
-        return genome;
+            if (shouldValidate) {
+                genome.validate();
+            }
+
+            return genome;
+        } catch (e) {
+            return null;
+        }
     }
 
     constructor() {
@@ -74,11 +82,11 @@ export default class Genome {
      * Convienience accessors. This really should be some kind of dynamic getter.
      */
 
-    get speed(){
+    get speed() {
         return this.getFeature('speed');
     }
 
-    get fertility(){
+    get fertility() {
         return this.getFeature('fertility');
     }
 }

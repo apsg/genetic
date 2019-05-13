@@ -33,12 +33,16 @@
         },
 
         mounted() {
-            this.genome = Genome.fromBin('000000000');
-            this.genome2 = Genome.fromBin('111111111');
+            this.genome = Genome.fromBin('000000000', false);
+            this.genome2 = Genome.fromBin('111111111', false);
 
             this.cross = Reproduction.cross(this.genome, this.genome2);
 
-            console.log(this.genome2.getFeature('speed'));
+            let genome3 = Genome.fromBin(this.cross);
+
+            genome3.validate();
+
+            console.log(genome3.getFeature('speed'));
         },
 
         methods: {

@@ -57,8 +57,6 @@ export default class Gene {
             throw new Error("Invalid gene constraints");
         }
 
-        console.log(this.value);
-
         if (isNaN(this._value)
             || this.value < this.min
             || this.value > this.max
