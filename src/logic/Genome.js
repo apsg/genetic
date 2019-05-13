@@ -3,19 +3,15 @@ import FertilityGene from "./genes/FertilityGene";
 
 export default class Genome {
 
-    static fromBin(code, shouldValidate = true) {
-        try {
-            let genome = new this();
-            genome.loadGenes(code);
+    static fromBin(code) {
+        let genome = new this();
+        genome.loadGenes(code);
 
-            if (shouldValidate) {
-                genome.validate();
-            }
+        return genome;
+    }
 
-            return genome;
-        } catch (e) {
-            return null;
-        }
+    static fromValues(values) {
+        return (new this()).loadValues(values);
     }
 
     constructor() {
@@ -33,6 +29,18 @@ export default class Genome {
         this.length = this.genes.reduce(function (partial_sum, gene) {
             return partial_sum + gene.length
         }, 0);
+    }
+
+    loadValues(values) {
+        if (values.length !== this.genes.length) {
+            throw new Error('Invalid values length');
+        }
+
+        for (let i = 0; i < values.length; i++) {
+            this.genes[i].value = values[i];
+        }
+
+        return this;
     }
 
     loadGenes(code) {
@@ -55,6 +63,7 @@ export default class Genome {
     validate() {
         for (let gene of this.genes) {
             gene.validate();
+            console.log(gene.toBin(), gene.showValidRange());
         }
 
         return this;
@@ -68,10 +77,10 @@ export default class Genome {
 
     getFeature(name) {
         let value = this.genes.filter(gene => {
-            return gene.name == name
+            return gene.name === name;
         })[0].value;
 
-        if (isNaN(value) || value == 'undefined') {
+        if (isNaN(value) || value === 'undefined') {
             return null;
         }
 

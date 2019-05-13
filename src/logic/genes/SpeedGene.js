@@ -7,7 +7,7 @@ export default class SpeedGene extends Gene {
     }
 
     static get length() {
-        return 2;
+        return 5;
     }
 
     static get min() {
@@ -15,7 +15,7 @@ export default class SpeedGene extends Gene {
     }
 
     static get max() {
-        return 0.3;
+        return 1;
     }
 
     static get divider(){

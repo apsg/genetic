@@ -53,7 +53,10 @@ export default class Gene {
     }
 
     validate() {
-        if (this.max > (Math.pow(2, this.constructor.length) / this.constructor.divider)) {
+        /**
+         * Can we store needed values using selected number of bits?
+         */
+        if (this.divider * this.max > (Math.pow(2, this.constructor.length))) {
             throw new Error("Invalid gene constraints");
         }
 
@@ -65,6 +68,15 @@ export default class Gene {
         }
 
         return this;
+    }
+
+    showValidRange() {
+        return {
+            min: "0".repeat(this.length),
+            max: (this.max*this.divider)
+                .toString(2)
+                .padStart(this.constructor.length, '0')
+        }
     }
 
     get value() {
