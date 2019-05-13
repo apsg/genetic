@@ -57,4 +57,28 @@ export default class Genome {
             .map(gene => gene.toBin())
             .join('');
     }
+
+    getFeature(name) {
+        let value = this.genes.filter(gene => {
+            return gene.name == name
+        })[0].value;
+
+        if (isNaN(value) || value == 'undefined') {
+            return null;
+        }
+
+        return value;
+    }
+
+    /**
+     * Convienience accessors. This really should be some kind of dynamic getter.
+     */
+
+    get speed(){
+        return this.getFeature('speed');
+    }
+
+    get fertility(){
+        return this.getFeature('fertility');
+    }
 }

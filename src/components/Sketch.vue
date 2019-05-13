@@ -37,6 +37,8 @@
             this.genome2 = Genome.fromBin('111111111');
 
             this.cross = Reproduction.cross(this.genome, this.genome2);
+
+            console.log(this.genome2.getFeature('speed'));
         },
 
         methods: {
