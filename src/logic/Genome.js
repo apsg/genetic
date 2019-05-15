@@ -61,9 +61,12 @@ export default class Genome {
     }
 
     validate() {
+        if (this.declarations.length !== this.genes.length) {
+            throw new Error('Invalid genome length - number of genes');
+        }
+
         for (let gene of this.genes) {
             gene.validate();
-            console.log(gene.toBin(), gene.showValidRange());
         }
 
         return this;
