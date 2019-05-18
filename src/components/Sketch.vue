@@ -9,6 +9,7 @@
 <script>
     import VueP5 from 'vue-p5'
     import Genome from '../logic/Genome'
+    import Specimen from "../logic/Specimen";
 
     export default {
         name: 'Sketch',
@@ -26,30 +27,35 @@
                 genome: null,
                 genome2: null,
                 cross: null,
+                specimen: null,
+                width: 800,
+                height: 800,
             }
         },
 
         mounted() {
-            this.genome = Genome.fromValues([0.99, 0.9]);
-            this.genome2 = Genome.fromBin('111111111111', false);
+            this.genome = Genome.fromValues([0.99, 5]);
 
             this.genome.validate();
 
-
-            // this.cross = Reproduction.cross(this.genome, this.genome2);
-            //
-            // let genome3 = Genome.fromBin(this.cross);
-
+            this.specimen = new Specimen(this.genome, 100, 100);
         },
 
         methods: {
             setup(sketch) {
-                sketch.createCanvas(400, 400);
-                sketch.background(...this.bgColor);
+                sketch.createCanvas(this.width, this.height);
+
+                sketch.frameRate(10);
             },
 
             draw(sketch) {
-                sketch.ellipse(50, 50, 80, 80);
+                sketch.clear();
+                sketch.background(...this.bgColor);
+
+                this.specimen.draw(sketch);
+                this.specimen.update();
+
+                // sketch.noLoop();
             }
         }
     }
