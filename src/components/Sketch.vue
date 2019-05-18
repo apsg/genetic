@@ -9,7 +9,8 @@
 <script>
     import VueP5 from 'vue-p5'
     import Genome from '../logic/Genome'
-    import Specimen from "../logic/Specimen";
+    import Specimen from "../world/Specimen";
+    import Food from "../world/Food";
 
     export default {
         name: 'Sketch',
@@ -23,7 +24,7 @@
 
         data() {
             return {
-                bgColor: [100, 255, 100],
+                bgColor: [200, 200, 200],
                 genome: null,
                 genome2: null,
                 cross: null,
@@ -39,6 +40,8 @@
             this.genome.validate();
 
             this.specimen = new Specimen(this.genome, 100, 100);
+
+            this.food = new Food(150, 150);
         },
 
         methods: {
@@ -52,8 +55,8 @@
                 sketch.clear();
                 sketch.background(...this.bgColor);
 
-                this.specimen.draw(sketch);
-                this.specimen.update();
+                this.specimen.draw(sketch).update();
+                this.food.draw(sketch);
 
                 // sketch.noLoop();
             }

@@ -1,4 +1,4 @@
-import {clip, clipPosition, hslToRgb, move, round} from './MathHelper';
+import {clip, clipPosition, hslToRgb, move, round} from '../logic/MathHelper';
 
 export default class Specimen {
     constructor(genome, posX, posY) {
@@ -18,12 +18,16 @@ export default class Specimen {
         sketch.ellipse(this.position.x, this.position.y, 10, 10);
 
         sketch.colorMode(sketch.RGB);
+
+        return this;
     }
 
     update() {
-        this.energy = clip(this.energy - 1, 0, 100);
+        this.energy = clip(this.energy - 0.1, 0, 100);
         this.position = clipPosition(move(this.position, this.heading, this.speed), 0, 800);
         this.heading = round(this.heading + 2 * Math.random() - 1, 0, 360);
+
+        return this;
     }
 
     get speed() {
@@ -36,5 +40,9 @@ export default class Specimen {
 
     get color() {
         return hslToRgb(this.energy / 100, 1, 0.5);
+    }
+
+    get isAlive() {
+        return this.energy > 0;
     }
 }
