@@ -35,7 +35,7 @@
         },
 
         mounted() {
-            this.genome = Genome.fromValues([0.99, 5]);
+            this.genome = Genome.fromValues([0.99, 5, 20]);
 
             this.genome.validate();
 

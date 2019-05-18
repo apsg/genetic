@@ -8,7 +8,6 @@ export default class Specimen {
      */
     constructor(genome, posX, posY) {
         this.position = new Position(posX, posY);
-
         this.genome = genome;
 
         this.energy = 50;

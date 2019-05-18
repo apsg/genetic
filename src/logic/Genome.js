@@ -1,5 +1,6 @@
 import SpeedGene from './genes/SpeedGene';
 import FertilityGene from "./genes/FertilityGene";
+import SenseGene from "./genes/SenseGene";
 
 export default class Genome {
 
@@ -17,7 +18,8 @@ export default class Genome {
     constructor() {
         this.declarations = [
             FertilityGene,
-            SpeedGene
+            SpeedGene,
+            SenseGene,
         ];
 
         this.genes = [];
