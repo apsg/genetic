@@ -1,11 +1,13 @@
-import {clip, clipPosition, hslToRgb, move, round} from '../logic/MathHelper';
+import {clip, clipPosition, hslToRgb, move, Position, round} from '../logic/MathHelper';
 
 export default class Specimen {
+    /**
+     * @param {Genome} genome
+     * @param {Number} posX
+     * @param {Number} posY
+     */
     constructor(genome, posX, posY) {
-        this.position = {
-            x: posX,
-            y: posY
-        };
+        this.position = new Position(posX, posY);
 
         this.genome = genome;
 

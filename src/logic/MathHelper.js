@@ -1,15 +1,15 @@
+/**
+ * @param {Position} position
+ * @param {Number} heading
+ * @param {Number} speed
+ * @returns {Position}
+ */
 export function move(position, heading, speed) {
-    let newPosition = {
-        x: 0,
-        y: 0,
-    };
+    let x = position.x + Math.cos(heading) * speed;
+    let y = position.y + Math.sin(heading) * speed;
 
-    newPosition.x = position.x + Math.cos(heading) * speed;
-    newPosition.y = position.y + Math.sin(heading) * speed;
-
-    return newPosition;
+    return new Position(x, y);
 }
-
 
 export function round(value, min, max) {
     if (value < min) {
@@ -33,28 +33,35 @@ export function clip(value, min, max) {
     return value;
 }
 
+/**
+ *
+ * @param {Position} position
+ * @param min
+ * @param max
+ * @returns {Position}
+ */
 export function clipPosition(position, min, max) {
-    return {
-        x: clip(position.x, min, max),
-        y: clip(position.y, min, max),
-    }
+    return new Position(
+        clip(position.x, min, max),
+        clip(position.y, min, max)
+    );
+}
+
+function hue2rgb(p, q, t) {
+    if (t < 0) t += 1;
+    if (t > 1) t -= 1;
+    if (t < 1 / 6) return p + (q - p) * 6 * t;
+    if (t < 1 / 2) return q;
+    if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+    return p;
 }
 
 export function hslToRgb(h, s, l) {
     var r, g, b;
 
-    if (s == 0) {
+    if (s === 0) {
         r = g = b = l; // achromatic
     } else {
-        function hue2rgb(p, q, t) {
-            if (t < 0) t += 1;
-            if (t > 1) t -= 1;
-            if (t < 1 / 6) return p + (q - p) * 6 * t;
-            if (t < 1 / 2) return q;
-            if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-            return p;
-        }
-
         var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
         var p = 2 * l - q;
         r = hue2rgb(p, q, h + 1 / 3);
@@ -63,4 +70,11 @@ export function hslToRgb(h, s, l) {
     }
 
     return [r * 255, g * 255, b * 255];
+}
+
+export class Position {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
 }
