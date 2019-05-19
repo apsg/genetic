@@ -6,15 +6,15 @@ export default class SenseGene extends Gene{
     }
 
     static get length() {
-        return 5;
+        return 6;
     }
 
     static get min() {
-        return 0;
+        return 10;
     }
 
     static get max() {
-        return 20;
+        return 50;
     }
 
     static get divider(){

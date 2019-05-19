@@ -96,5 +96,5 @@ export function distance(pos1, pos2) {
 export function angle(fromPoint, toPoint) {
     let radians = Math.atan2(toPoint.y - fromPoint.y, toPoint.x - fromPoint.x);
 
-    return radians * Math.PI / 180;
+    return 2*radians*Math.PI;
 }

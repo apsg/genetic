@@ -10,7 +10,7 @@
     import VueP5 from 'vue-p5'
     import Genome from '../logic/Genome'
     import Specimen from "../world/Specimen";
-    import Food from "../world/Food";
+    import World from "../world/World";
 
     export default {
         name: 'Sketch',
@@ -26,22 +26,29 @@
             return {
                 bgColor: [200, 200, 200],
                 genome: null,
-                genome2: null,
                 cross: null,
-                specimen: null,
+                specimens: [],
                 width: 800,
                 height: 800,
+                world: null,
             }
         },
 
         mounted() {
-            this.genome = Genome.fromValues([0.99, 5, 20]);
+            this.world = new World();
+
+            this.genome = Genome.fromValues([0.99, 5, 50]);
+
 
             this.genome.validate();
 
-            this.specimen = new Specimen(this.genome, 100, 100);
-
-            this.food = new Food(150, 150);
+            this.specimens.push(new Specimen(this.genome, this.world.randomX(), this.world.randomY()));
+            this.specimens.push(new Specimen(this.genome, this.world.randomX(), this.world.randomY()));
+            this.specimens.push(new Specimen(this.genome, this.world.randomX(), this.world.randomY()));
+            this.specimens.push(new Specimen(this.genome, this.world.randomX(), this.world.randomY()));
+            this.specimens.push(new Specimen(this.genome, this.world.randomX(), this.world.randomY()));
+            this.specimens.push(new Specimen(this.genome, this.world.randomX(), this.world.randomY()));
+            this.specimens.push(new Specimen(this.genome, this.world.randomX(), this.world.randomY()));
         },
 
         methods: {
@@ -55,8 +62,16 @@
                 sketch.clear();
                 sketch.background(...this.bgColor);
 
-                this.specimen.draw(sketch).update();
-                this.food.draw(sketch);
+                for (let specimen of this.specimens) {
+                    specimen
+                        .draw(sketch)
+                        .update()
+                        .sense(this.world.foods);
+                }
+
+                this.world
+                    .draw(sketch)
+                    .grow(10);
 
                 // sketch.noLoop();
             }
