@@ -96,5 +96,21 @@ export function distance(pos1, pos2) {
 export function angle(fromPoint, toPoint) {
     let radians = Math.atan2(toPoint.y - fromPoint.y, toPoint.x - fromPoint.x);
 
-    return 2*radians*Math.PI;
+    return 2 * radians * Math.PI;
+}
+
+/**
+ * @param {Number} min
+ * @param {Number} max
+ * @param {boolean} round
+ * @return {number|*}
+ */
+export function rand(min, max, round) {
+    let number = (max - min) * Math.random() + min;
+
+    if (round) {
+        return Math.round(number);
+    }
+
+    return number;
 }

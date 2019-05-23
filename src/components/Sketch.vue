@@ -8,9 +8,8 @@
 
 <script>
     import VueP5 from 'vue-p5'
-    import Genome from '../logic/Genome'
-    import Specimen from "../world/Specimen";
     import World from "../world/World";
+    import Population from "../world/Population";
 
     export default {
         name: 'Sketch',
@@ -25,9 +24,7 @@
         data() {
             return {
                 bgColor: [200, 200, 200],
-                genome: null,
-                cross: null,
-                specimens: [],
+                population: null,
                 width: 800,
                 height: 800,
                 world: null,
@@ -36,19 +33,7 @@
 
         mounted() {
             this.world = new World();
-
-            this.genome = Genome.fromValues([0.99, 5, 50]);
-
-
-            this.genome.validate();
-
-            this.specimens.push(new Specimen(this.genome, this.world.randomX(), this.world.randomY()));
-            this.specimens.push(new Specimen(this.genome, this.world.randomX(), this.world.randomY()));
-            this.specimens.push(new Specimen(this.genome, this.world.randomX(), this.world.randomY()));
-            this.specimens.push(new Specimen(this.genome, this.world.randomX(), this.world.randomY()));
-            this.specimens.push(new Specimen(this.genome, this.world.randomX(), this.world.randomY()));
-            this.specimens.push(new Specimen(this.genome, this.world.randomX(), this.world.randomY()));
-            this.specimens.push(new Specimen(this.genome, this.world.randomX(), this.world.randomY()));
+            this.population = new Population(this.world);
         },
 
         methods: {
@@ -62,12 +47,9 @@
                 sketch.clear();
                 sketch.background(...this.bgColor);
 
-                for (let specimen of this.specimens) {
-                    specimen
-                        .draw(sketch)
-                        .update()
-                        .sense(this.world.foods);
-                }
+                this.population
+                    .draw(sketch)
+                    .update();
 
                 this.world
                     .draw(sketch)

@@ -1,6 +1,7 @@
 import SpeedGene from './genes/SpeedGene';
 import FertilityGene from "./genes/FertilityGene";
 import SenseGene from "./genes/SenseGene";
+import {rand} from "./MathHelper";
 
 export default class Genome {
 
@@ -13,6 +14,19 @@ export default class Genome {
 
     static fromValues(values) {
         return (new this()).loadValues(values);
+    }
+
+    /**
+     * @return {Genome}
+     */
+    static random() {
+        let genome = new Genome();
+
+        for (let gene of genome.genes) {
+            gene.value = rand(gene.constructor.min, gene.constructor.max);
+        }
+
+        return genome;
     }
 
     constructor() {
