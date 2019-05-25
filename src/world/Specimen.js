@@ -12,6 +12,7 @@ export default class Specimen {
 
         this.energy = 50;
         this.heading = 360 * Math.random();
+        this.timeout = 0;
     }
 
     draw(sketch) {
@@ -31,6 +32,7 @@ export default class Specimen {
         this.energy = clip(this.energy - 0.2, 0, 100);
         this.position = clipPosition(move(this.position, this.heading, this.speed), 0, 800);
         this.heading = round(this.heading + 2 * Math.random() - 1, 0, 360);
+        this.timeout = Math.max(0, this.timeout - 1);
 
         return this;
     }
@@ -84,6 +86,13 @@ export default class Specimen {
         return this;
     }
 
+    reproduced() {
+        this.energy = this.energy - 10;
+        this.timeout = 20;
+
+        return this;
+    }
+
     get speed() {
         return this.genome.getFeature('speed');
     }
@@ -102,5 +111,9 @@ export default class Specimen {
 
     get isAlive() {
         return this.energy > 0;
+    }
+
+    get canReproduce() {
+        return this.energy > 25 && this.timeout === 0;
     }
 }
