@@ -1,8 +1,8 @@
 <template>
     <div>
         <vue-p5 v-on="{setup, draw}"></vue-p5>
-        <p>{{ genome }}</p>
-        <p>{{ cross }}</p>
+        <p v-if="this.population">Population: {{ this.population.count }}</p>
+        <p v-if="this.world">Food: {{ this.world.foods.length }}</p>
     </div>
 </template>
 
@@ -44,18 +44,24 @@
             },
 
             draw(sketch) {
-                sketch.clear();
-                sketch.background(...this.bgColor);
 
-                this.population
-                    .draw(sketch)
-                    .update();
+                for (let i = 0; i < 5; i++) {
+                    sketch.clear();
+                    sketch.background(...this.bgColor);
 
-                this.world
-                    .draw(sketch)
-                    .grow(10);
+                    this.population
+                        .draw(sketch)
+                        .update()
+                        .reproduce();
 
-                // sketch.noLoop();
+                    this.world
+                        .draw(sketch)
+                        .grow(10);
+
+                    if (this.population.count === 0) {
+                        sketch.noLoop();
+                    }
+                }
             }
         }
     }
